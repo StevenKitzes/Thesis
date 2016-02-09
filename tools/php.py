@@ -15,6 +15,6 @@ print("Running Apache/PHP test [" + name + "] with " + num + " requests, and " +
 if args > 4:
 	print("(Iteration: " + str((int(sys.argv[4]) + 1)) + ")")
 
-command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r http://myapp.com/" + name + ".php > ..\\results\\php_" + num + "-" + con + "-" + name + mod + ".txt"
+command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r http://192.168.0.10/" + name + ".php > ..\\results\\php_" + num + "-" + con + "-" + name + mod + ".txt"
 
 os.system(command)
