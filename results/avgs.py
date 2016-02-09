@@ -17,8 +17,6 @@ if sys.argv[1]:
 		print("files are present, from 0 through the number (howmany) given, exclusive.")
 		sys.exit()
 
-print("Calculating some averages from given input files . . .")
-
 bandwidths = []		# in req per sec
 concurrentMeans = []# in req per sec
 means = []			# in ms
@@ -29,6 +27,9 @@ con = sys.argv[2]
 name = sys.argv[3]
 which = sys.argv[4]			# 'node' or 'php'
 howmany = int(sys.argv[5])
+
+print("Calculating some averages over " + num + " requests with " + con + " concurrency")
+print("    for test '" + name + "' on " + which + " . . .")
 
 for i in range(0, howmany):
 	incomingFile = which + "_" + num + "-" + con + "-" + name + "_" + str(i) + ".txt"
