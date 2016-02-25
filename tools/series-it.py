@@ -23,7 +23,7 @@ desiredIterations = sys.argv[4]
 
 currentCon = 2
 
-while currentCon < maxCon:
+while currentCon <= maxCon:
 	command = "python series.py " + num + " " + str(currentCon) + " " + name + " " + desiredIterations
 	os.system(command)
 	currentCon = 2 * currentCon

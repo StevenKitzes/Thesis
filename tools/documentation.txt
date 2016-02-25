@@ -1,0 +1,140 @@
+These are helper scripts that make it easier to run Apache Bench tests multiple times in batch, and without needing to repeatedly type in a variety of parameters.  The simplest scripts are the 'node.py' and 'php.py' scripts, which run a single Apache Bench test based on given parameters for number of requests to make, concurrency level, and the name of the test to target on the server.  The most complex scripts chain together to allow a user to test a given script multiple times at each of a variety of increasing concurrency levels.
+
+= = =
+IMPORTANT NOTE: these scripts all use a hard-coded path to Apache Bench and a hard-coded server address, so these will need to be changed on your local system.  Note also that if you are running Apache/PHP and Node.js on non-standard ports, you will need to include that in your hard-coded addresses in these scripts; for example, if you are running Node.js on port 3000, at address 192.168.0.10, you will need to hard-code 'http://192.168.0.1:3000/' as the address.  In a future update, I hope to externalize these parameters to a configuration file to make things easier for everyone, but for now, be aware of this limitation.
+= = =
+
+Details on each individual script follow.
+
+
+
+= = = = =
+node.py:
+= = = = =
+Execute a single Apache Bench run making requests to Node.js and pipe the results to a new file.  By default, this file will be stored in a directory titled 'results' on the same level as the directory this node.py script resides in.  The output file name is built from parameters given to this script, plus an optional file name modifier (see below).  Output will automatically overwrite existing results, so be careful!  This script requires the following parameters, in order:
+
+1. Number of requests:
+How many requests Apache Bench will make to the server.
+
+2. Concurrency level:
+How many of the above reqeusts will be made concurrently.
+
+3. Name of test:
+This is the name (not file name) of the Node.js route being requested, e.g. if the route is called 'simpleString' then Apache Bench will request 'http://192.168.0.10:3000/name/'
+
+4. [optional] File name modifier:
+If given, this will be appended to the end of the output file's file name with an underscore.  For example, if the given modifier is 'test' then the output file name will be written:
+node_100-2-myScript_test.txt
+instead of:
+node_100-2-myScript.txt'
+An example of where this can be handy is when using other helper scripts to iterate over many tests.  The file name modifier can be a number given by the helper script that iterates for each test run, allowing multiple output results files that can be averaged or examined for consistency, etc.
+
+Example (note that the final argument 'nodetest' is optional):
+$ python node.py 10000 1000 simpleString nodetest
+
+
+
+= = = = =
+php.py:
+= = = = =
+Execute a single Apache Bench run making requests to Apache/PHP and pipe the results to a new file.  By default, this file will be stored in a directory titled 'results' on the same level as the directory this php.py script resides in.  The output file name is built from parameters given to this script, plus an optional file name modifier (see below).  Output will automatically overwrite existing results, so be careful!  This script requires the following parameters, in order:
+
+1. Number of requests:
+How many requests Apache Bench will make to the server.
+
+2. Concurrency level:
+How many of the above reqeusts will be made concurrently.
+
+3. Name of test:
+This is the name (not file name) of the PHP script being requested, e.g. if the route is called 'simpleString' then Apache Bench will request 'http://192.168.0.10/name.php'
+
+4. [optional] File name modifier:
+If given, this will be appended to the end of the output file's file name with an underscore.  For example, if the given modifier is 'test' then the output file name will be written:
+php_100-2-myScript_test.txt
+instead of:
+php_100-2-myScript.txt'
+An example of where this can be handy is when using other helper scripts to iterate over many tests.  The file name modifier can be a number given by the helper script that iterates for each test run, allowing multiple output results files that can be averaged or examined for consistency, etc.
+
+Example (note that the final argument 'phptest' is optional):
+$ python php.py 10000 1000 simpleString phptest
+
+
+
+= = = = =
+both.py
+= = = = =
+Accepts the four main parameters (three required and one optional) for the node.py and php.py scripts described above, and automatically runs one execution of each of those scripts.  This allows the user to run the same test on both Node.js and Apache/PHP with a single command.  The tests are run sequentially, so you should not need to worry about competition over resources.  This scripts requires the following parameters, in order:
+
+1. Number of requests
+2. Concurrency level
+3. Name of test
+4. [optional] File name modifier
+
+See above documentation on node.py and php.py for more detail on what each parameter means.
+
+Example (note that the final argument 'test' is optional):
+$ python both.py 10000 1000 simpleString test
+will automatically execute both of the two following tests:
+$ python node.py 10000 1000 simlpeString test
+$ python php.py 10000 1000 simpleString test
+
+
+
+= = = = =
+series.py
+= = = = =
+Executes a batch of Apache Bench tests by taking the three required arguments for node.py or php.py execution (see above) and appending the current iteration count of the series as the fourth argument (to modify output file names).  This script automatically performs the requested test in both Node.js and Apache/PHP, and performs it the requested number of times (given as an execution parameter).  The tests are all run sequentially, so there should be no competition over resources.  The following arguments are all required, in order:
+
+1. Number of requests:
+How many requests Apache Bench will make to the server for each test run.
+
+2. Concurrency level:
+How many of the above reqeusts will be made concurrently.
+
+3. Name of test:
+This is the name (not file name) of the resource being requested.
+
+4. Number of repetitions:
+How many times this test should be executed against both Node.js and Apache/PHP
+
+Example (note that ALL parameters are required):
+$ python series.py 10000 1000 simpleString 10
+
+This example will execute ten Apache Bench runs against Node.js, and ten runs against Apache/PHP; each individual test run will consist of 10,000 requests with 1,000 concurrent requests outstanding at any given time.  This automatically knows to make the request 'http://[yourAddressHere]/simpleString.php' for Apache/PHP and the requests 'http://[yourAddressHere]/simpleString/' for Node.js.
+
+
+
+= = = = =
+series-node.py
+= = = = =
+Identical to series.py above, except that it runs the requested tests only against Node.js and not against Apache/PHP.
+
+
+
+= = = = =
+series-php.py
+= = = = =
+Identical to series.py above, except that it runs the requested tests only against Apache/PHP and not against Node.js.
+
+
+
+= = = = =
+series-it.py
+= = = = =
+Runs a series-of-series of Apache Bench tests, with increasing concurrency levels, starting at two concurrent requests, and increasing the level of concurrency by powers of two until reaching an upper limit given as an execution argument by the user.  This script automatically runs tests against both Node.js and Apache/PHP.  See example below for clarification.  This script requires all of the following parameters, in order:
+
+1. Number of requests:
+How many requests Apache Bench will make to the server for each test run.
+
+2. Name of test:
+This is the name (not file name) of the resource to be requested.
+
+3. Maximum concurrency:
+This script will execute a batch of test runs at every concurrency level that is a power of two, starting at 2 and doubling until it reaches the value of this maximum concurrency parameter.  For example, if the user enters 20 as the maximum concurrency, this script will run a batch of test runs at concurrency levels 2, 4, 8, and 16, then stop.
+
+4. Desired iterations:
+The number of test runs to execute at each concurrency level.  For example, if the user requests 5 iterations, this script will execute five Node.js test runs and five Apache/PHP test runs at each concurrency level.
+
+Example:
+$ python series-it.py 10000 simpleString 512 10
+This will execute 10 Node.js runs and 10 Apache/PHP runs, with 10,000 requests each, at every concurrency level up to 512, including 2, 4, 8, 16, 32, 64, 128, 256, and 512; for a total of 180 test runs and 1,800,000 total requests.

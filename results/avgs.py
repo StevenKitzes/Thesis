@@ -1,3 +1,7 @@
+# This script scans a range of tests that were performed with the same parameters, gathers
+# relevant data from those tests, and averages the results.  The 'help' output below gives
+# directions on how to use this script and what parameters are required.
+
 import re
 import sys
 
@@ -7,14 +11,16 @@ if sys.argv[1]:
 		print("")
 		print("    python avgs.py [num] [con] [name] [which] [howmany]")
 		print("")
-		print("[num]                    - how many requests were made in the series")
-		print("[con]                    - concurrency level evaluated in the series")
-		print("[name]                   - name of the test that was run in the series")
+		print("[num]                    - how many requests were made in each Apache Bench test run")
+		print("[con]                    - concurrency level for the test run batch")
+		print("[name]                   - name of the test script that was being evaluated")
 		print("[which]                  - 'node' or 'php' (can't average both together)")
 		print("[howmany]                - how many test result files to include")
 		print("")
 		print("This script ASSUMES that file names are well formed, and that all")
 		print("files are present, from 0 through the number (howmany) given, exclusive.")
+		print("Error checking is not provided, so please be sure to double check your")
+		print("numbers and enter them in the correct order!")
 		sys.exit()
 
 bandwidths = []		# in req per sec
