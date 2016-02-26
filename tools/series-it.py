@@ -12,7 +12,7 @@ if sys.argv[1]:
 		print("[maxCon]                 - concurrency level starts at two and")
 		print("                           increases by powers of two until this")
 		print("                           value is reached")
-		print("[desiredIterations       - how many times to run the same test in")
+		print("[desiredIterations]      - how many times to run the same test in")
 		print("                           the series (to investigate consistency)")
 		sys.exit()
 
