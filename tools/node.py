@@ -15,6 +15,9 @@ print("Running Node test [" + name + "] with " + num + " requests, and " + con +
 if args > 4:
 	print("(Iteration: " + str((int(sys.argv[4]) + 1)) + ")")
 
-command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r http://192.168.0.10:3000/" + name + "/ > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
+if name == 'static':
+	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -s 99999 http://192.168.0.10:3000/reactor.jpg > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
+else:
+	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -s 99999 http://192.168.0.10:3000/" + name + "/ > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
 
 os.system(command)
