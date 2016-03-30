@@ -2,3 +2,4 @@ node_*
 php_*
 local*/
 *~
+*.tar.bz2
