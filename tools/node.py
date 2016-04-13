@@ -16,8 +16,8 @@ if args > 4:
 	print("(Iteration: " + str((int(sys.argv[4]) + 1)) + ")")
 
 if name == 'static':
-	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -s 99999 http://192.168.0.10:3000/reactor.jpg > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
+	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -l -s 999999 http://192.168.0.10:3000/reactor.jpg > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
 else:
-	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -s 99999 http://192.168.0.10:3000/" + name + "/ > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
+	command = "c:\\Apache24\\bin\\ab.exe -n " + num + " -c " + con + " -r -l -s 999999 http://192.168.0.10:3000/" + name + "/ > ..\\results\\node_" + num + "-" + con + "-" + name + mod + ".txt"
 
 os.system(command)
