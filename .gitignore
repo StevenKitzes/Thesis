@@ -3,3 +3,5 @@ php_*
 local*/
 *~
 *.tar.bz2
+n_*
+p_*
