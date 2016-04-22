@@ -26,7 +26,7 @@ def n_fireDatabase():
 	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","10000","-c","64","http://192.168.0.10:3000/db/",">","../results/n_database" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
 def n_fireRegexp():
-	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10:3000/regexp/",">","../results/n_regexp" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10:3000/regexpChild/",">","../results/n_regexp" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
 def n_fireStatic():
 	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10:3000/reactor.jpg",">","../results/n_static" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
@@ -35,7 +35,7 @@ def p_fireDatabase():
 	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","10000","-c","64","http://192.168.0.10/db.php",">","../results/p_database" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
 def p_fireRegexp():
-	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10/regexp.php",">","../results/p_regexp" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10/regexpChild.php",">","../results/p_regexp" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
 def p_fireStatic():
 	subprocess.Popen(["c:/apache24/bin/ab.exe", "-n","30","-c","1","http://192.168.0.10/reactor.jpg",">","../results/p_static" + mod + ".txt"], shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
