@@ -1,0 +1,13 @@
+Request type,Node.js,Apache/PHP
+Database bandwidth,95.47200000000001,95.864
+Database concurrent mean,10.4766,10.4324
+Database mean,670.5,667.6784
+Database longest,2766.2,2691.0
+String search bandwidth,0.33,0.326
+String search concurrent mean,3062.9883999999997,3075.5628
+String search mean,3062.9883999999997,3075.5628
+String search longest,3101.6,3849.8
+Static file bandwidth,0.5599999999999999,0.56
+Static file concurrent mean,1782.3687999999997,1793.6296000000002
+Static file mean,1782.3687999999997,1793.6296000000002
+Static file longest,2507.0,2221.2
